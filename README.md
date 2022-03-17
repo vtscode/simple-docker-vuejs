@@ -185,13 +185,16 @@ Above created Docker Vue JS Web Application is powerful enough for production us
 
 For complex production use cases it may be wiser to use giants like NGINX or Apache. In our case we are using NGINX to serve our Vue JS Web Application because it is considered as one of the most performant and tested solutions.
 
+Create .dockerignore for ignore file if you want it
+
 Let’s refactor our Dockerfile to use NGINX or Delete the old Dockerfile and create a new one.
 ```
 # build stage
+# node and yarn installed in here image
 FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY . .
-RUN npm run build
+RUN yarn run build
 # production stage
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
